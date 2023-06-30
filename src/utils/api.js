@@ -33,7 +33,10 @@ class Api {
     return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name: data.title,
+        link: data.link
+      }),
     }).then((res) =>
       this._checkResponse(res)
     );
@@ -70,7 +73,9 @@ class Api {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        avatar: data.avatar
+      }),
     }).then((res) => {
       return this._checkResponse(res);
     });
@@ -80,7 +85,10 @@ class Api {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about
+      }),
     }).then((res) => this._checkResponse(res)
     );
   }
