@@ -10,8 +10,8 @@ function Main({
   onCardClick,
   onDelete,
   cards,
+  onCardLike,
 }) {
-
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
@@ -42,7 +42,12 @@ function Main({
         {cards.map((data) => {
           return (
             <div className="element" key={data._id}>
-              <Card card={data} onCardClick={onCardClick} onDelete={onDelete} />
+              <Card
+                card={data}
+                onCardLike={onCardLike}
+                onCardClick={onCardClick}
+                onDelete={onDelete}
+              />
             </div>
           );
         })}

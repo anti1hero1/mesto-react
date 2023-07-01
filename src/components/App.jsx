@@ -57,8 +57,8 @@ function App() {
     api
       .deleteCard(deleteCardId)
       .then(() => {
-        setCards(
-          cards.filter((card) => {
+        setCards((state)=>
+          state.filter((card) => {
             return card._id !== deleteCardId;
           })
         );
@@ -113,6 +113,32 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+const handleLike = React.useCallback(
+  (card) => {
+    const isLike = card.likes.some(
+      (element) => currentUser._id === element._id
+    );
+
+    if (isLike) {
+      api
+        .deleteCardLike(card._id)
+        .then((res) => {
+          setCards((state) => state.map((c) => (c._id === card._id ? res : c)));
+        })
+        .catch((err) => console.log(err));
+    } else {
+      api
+        .getCardLike(card._id)
+        .then((res) => {
+          setCards((state) => state.map((c) => (c._id === card._id ? res : c)));
+        })
+        .catch((err) => console.log(err));
+    }
+  },
+  [currentUser._id]
+);
+
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -125,6 +151,7 @@ function App() {
           onCardClick={handleCardClick}
           onDelete={handleDeleteClick}
           cards={cards}
+          onCardLike={handleLike}
         />
 
         <Footer />

@@ -2,9 +2,9 @@ import React from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import ButtonLike from "./ButtonLike";
 
-function Card({ card, onCardClick,onDelete }) {
+function Card({ card, onCardClick, onDelete, onCardLike }) {
   const currentUser = React.useContext(CurrentUserContext);
-  
+
   return (
     <div className="element">
       <div className="element__item">
@@ -18,8 +18,8 @@ function Card({ card, onCardClick,onDelete }) {
           <h2 className="element__title">{card.name}</h2>
           <div className="element__like-container">
             <ButtonLike
-              likes={card.likes}
-              cardId={card._id}
+              onCardLike={onCardLike}
+              card={card}
               myId={currentUser._id}
             />
           </div>
